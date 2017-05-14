@@ -1,10 +1,12 @@
+#!/usr/bin/python3
+
 import os
 import json
 import argparse
 import requests
 
-from angular_flask.core import db
-from angular_flask.models import Post
+from base_app.core import db
+from base_app.models import Post
 
 
 def create_sample_db_entry(api_endpoint, payload):
@@ -12,7 +14,7 @@ def create_sample_db_entry(api_endpoint, payload):
     r = requests.post(
         url, data=json.dumps(payload),
         headers={'Content-Type': 'application/json'})
-    print r.text
+    print(r.text)
 
 
 def create_db():
@@ -35,23 +37,23 @@ def main():
     if args.command == 'create_db':
         create_db()
 
-        print "DB created!"
+        print("DB created!")
     elif args.command == 'delete_db':
         drop_db()
 
-        print "DB deleted!"
+        print("DB deleted!")
     elif args.command == 'seed_db' and args.seedfile:
         with open(args.seedfile, 'r') as f:
             seed_data = json.loads(f.read())
 
         for item_class in seed_data:
             items = seed_data[item_class]
-            print items
+            print(items)
             for item in items:
-                print item
+                print(item)
                 create_sample_db_entry('api/' + item_class, item)
 
-        print "\nSample data added to database!"
+        print("\nSample data added to database!")
     else:
         raise Exception('Invalid command')
 

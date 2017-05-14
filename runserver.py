@@ -1,5 +1,6 @@
+#!/usr/bin/python3
 import os
-from angular_flask import app
+from base_app import app
 
 
 def runserver():
